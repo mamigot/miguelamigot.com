@@ -23,6 +23,6 @@ services:
     environment:
       - VIRTUAL_HOST=miguelamigot.com
       - LETSENCRYPT_HOST=miguelamigot.com
-      - LETSENCRYPT_EMAIL=miguel@ibleducation.com
+      - LETSENCRYPT_EMAIL=miguel.amigot@gmail.com
     volumes:
       - /root/ghost:/var/lib/ghost
