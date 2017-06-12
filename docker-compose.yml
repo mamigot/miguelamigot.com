@@ -1,0 +1,28 @@
+version: '2'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro  
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /etc/nginx/certs
+  letsencrypt-nginx-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - nginx-proxy
+  web:
+    restart: always
+    image: ghost
+    environment:
+      - VIRTUAL_HOST=miguelamigot.com
+      - LETSENCRYPT_HOST=miguelamigot.com
+      - LETSENCRYPT_EMAIL=miguel@ibleducation.com
+    volumes:
+      - /root/ghost:/var/lib/ghost
